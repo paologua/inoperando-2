@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inoperando – Candidatura</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --accent: #B5FF4D;
+    --accent-glow: rgba(181, 255, 77, 0.2);
+    --accent-dim: rgba(181, 255, 77, 0.1);
+    --dark: #0A0A0A;
+    --dark-card: #111111;
+    --dark-surface: #141414;
+    --light: #FFFFFF;
+    --muted: #888888;
+    --border: rgba(255, 255, 255, 0.08);
+    --focus: rgba(181, 255, 77, 0.3);
+  }
+
+  body {
+    background: var(--dark);
+    color: var(--light);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(181, 255, 77, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 10, 0.9);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .logo-white {
+    color: var(--light);
+  }
+
+  .logo-accent {
+    color: var(--accent);
+  }
+
+  .logo-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-left: 3px;
+    margin-bottom: 3px;
+  }
+
+  .header-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 30px;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    position: sticky;
+    top: 68px;
+    z-index: 99;
+    background: var(--dark-card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+  }
+  
+  .progress-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #8FD93A);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  /* Hero */
+  .form-hero {
+    margin: 56px 0 48px;
+    animation: fadeUp 0.6s 0.1s both;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(181, 255, 77, 0.3);
+    color: var(--accent);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 30px;
+    margin-bottom: 24px;
+  }
+
+  .tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .form-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .form-hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .form-hero p {
+    margin-top: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--dark-card);
+    transition: all 0.3s ease;
+  }
+
+  .section:hover {
+    border-color: rgba(181, 255, 77, 0.2);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    background: var(--dark-surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent);
+    background: var(--accent-dim);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  .section-title {
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--light);
+  }
+
+  .section-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Fields */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field label {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  input, textarea, select {
+    background: var(--dark-surface);
+    border: 1px solid var(--border);
+    color: var(--light);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    padding: 14px 16px;
+    border-radius: 12px;
+    width: 100%;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--focus);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #3a3a3a;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath d='M1 1L7 7L13 1' stroke='%23888888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+
+  /* Checkbox grid */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .check-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--dark-surface);
+    transition: all 0.2s;
+  }
+
+  .check-label:hover {
+    border-color: var(--accent);
+  }
+
+  .check-label input {
+    display: none;
+  }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--muted);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .check-label input:checked ~ .check-box {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .check-box::after {
+    content: '';
+    width: 5px;
+    height: 3px;
+    border-left: 2px solid var(--dark);
+    border-bottom: 2px solid var(--dark);
+    transform: rotate(-45deg) translateY(-1px);
+    display: none;
+  }
+
+  .check-label input:checked ~ .check-box::after {
+    display: block;
+  }
+
+  /* Consent */
+  .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1.5;
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--dark-surface);
+  }
+
+  .consent-label input {
+    display: none;
+  }
+
+  .consent-box {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border: 2px solid var(--muted);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+
+  .consent-label input:checked ~ .consent-box {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .consent-box::after {
+    content: '';
+    width: 6px;
+    height: 4px;
+    border-left: 2px solid var(--dark);
+    border-bottom: 2px solid var(--dark);
+    transform: rotate(-45deg) translateY(-1px);
+    display: none;
+  }
+
+  .consent-label input:checked ~ .consent-box::after {
+    display: block;
+  }
+
+  /* File input */
+  .file-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .file-wrap:hover {
+    border-color: var(--accent);
+  }
+
+  .file-label-btn {
+    background: var(--dark-surface);
+    padding: 14px 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
+  }
+
+  .file-name {
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    color: #4a4a4a;
+    flex: 1;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  /* Submit button */
+  .submit-wrap {
+    margin-top: 24px;
+    text-align: right;
+  }
+
+  button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, #8FD93A 100%);
+    color: var(--dark);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(181, 255, 77, 0.3);
+  }
+
+  button[type="submit"] svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--dark);
+    stroke-width: 2;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--accent);
+  }
+
+  /* Focus */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .header-inner {
+      padding: 0 20px;
+    }
+    
+    .progress-wrap {
+      padding: 0 20px;
+    }
+    
+    .container {
+      padding: 0 20px;
+    }
+    
+    .field-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    
+    .checkbox-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .section-body {
+      padding: 20px;
+    }
+    
+    .section-header {
+      padding: 16px 20px;
+    }
+    
+    button[type="submit"] {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-white">Inoper</span><span class="logo-accent">ando</span><span class="logo-dot"></span>
+    </a>
+    <div class="header-tag">Candidatura</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="container">
+  <div class="form-hero">
+    <div class="tag">Cerchi lavoro?</div>
+    <h1>Invia la tua<br><em>candidatura</em></h1>
+    <p>Compila il modulo con precisione. Ogni informazione ci aiuta a trovare il posto giusto per te.</p>
+  </div>
+
+  <form action="mailto:cv@inoperando.it" method="post" enctype="text/plain" id="mainForm">
+
+    <!-- 01 DATI PERSONALI -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <span class="section-title">Dati personali</span>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="nome">Nome e cognome</label>
+            <input type="text" id="nome" name="nome" placeholder="Mario Rossi" required>
+          </div>
+          <div class="field">
+            <label for="eta">Età</label>
+            <input type="number" id="eta" name="eta" placeholder="35" min="16" max="80" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="comune">Comune di residenza</label>
+            <input type="text" id="comune" name="comune" placeholder="Milano" required>
+          </div>
+          <div class="field">
+            <label for="telefono">Telefono</label>
+            <input type="text" id="telefono" name="telefono" placeholder="+39 333 1234567" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="mario@email.it" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 FORMAZIONE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <span class="section-title">Formazione</span>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="titolo_studio">Titolo di studio</label>
+            <input type="text" id="titolo_studio" name="titolo_studio" placeholder="Diploma ITIS meccanica">
+          </div>
+          <div class="field">
+            <label for="anno_diploma">Anno di diploma</label>
+            <input type="text" id="anno_diploma" name="anno_diploma" placeholder="2008">
+          </div>
+        </div>
+        <div class="field">
+          <label for="corsi_tecnici">Corsi tecnici</label>
+          <textarea id="corsi_tecnici" name="corsi_tecnici" placeholder="Corso PLC, corso saldatura..."></textarea>
+        </div>
+        <div class="field">
+          <label for="certificazioni">Certificazioni</label>
+          <textarea id="certificazioni" name="certificazioni" placeholder="Patentino saldatura EN 287-1, RSPP..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 COMPETENZE TECNICHE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <span class="section-title">Competenze tecniche</span>
+      </div>
+      <div class="section-body">
+        <div class="checkbox-grid">
+          <label class="check-label"><input type="checkbox" name="competenze" value="Disegno tecnico"><span class="check-box"></span>Lettura disegno tecnico</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Strumenti da banco"><span class="check-box"></span>Strumenti da banco</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="CNC"><span class="check-box"></span>CNC</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Saldatura MIG"><span class="check-box"></span>Saldatura MIG</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Saldatura TIG"><span class="check-box"></span>Saldatura TIG</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Elettrico base"><span class="check-box"></span>Elettrico base</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Elettrico avanzato"><span class="check-box"></span>Elettrico avanzato</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Montaggio meccanico"><span class="check-box"></span>Montaggio meccanico</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Collaudo"><span class="check-box"></span>Collaudo</label>
+          <label class="check-label"><input type="checkbox" name="competenze" value="Manutenzione"><span class="check-box"></span>Manutenzione</label>
+        </div>
+        <div class="field">
+          <label for="competenze_altro">Altro</label>
+          <input type="text" id="competenze_altro" name="competenze_altro" placeholder="Specificare...">
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 ESPERIENZA -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <span class="section-title">Esperienza</span>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="anni_esperienza">Anni di esperienza</label>
+            <input type="number" id="anni_esperienza" name="anni_esperienza" placeholder="8" min="0">
+          </div>
+          <div class="field">
+            <label for="ultimo_ruolo">Ultimo ruolo</label>
+            <input type="text" id="ultimo_ruolo" name="ultimo_ruolo" placeholder="Saldatore MIG senior">
+          </div>
+        </div>
+        <div class="field">
+          <label for="mansioni">Mansioni principali</label>
+          <textarea id="mansioni" name="mansioni" placeholder="Descrivi le attività svolte quotidianamente..."></textarea>
+        </div>
+        <div class="field">
+          <label for="motivo_uscita">Perché hai lasciato l'ultimo lavoro</label>
+          <textarea id="motivo_uscita" name="motivo_uscita" placeholder="Sii diretto..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 COSA SAI FARE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <span class="section-title">Cosa sai fare davvero</span>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label for="cosa_sai_fare">3–5 punti concreti</label>
+          <textarea id="cosa_sai_fare" name="cosa_sai_fare" style="min-height:110px" placeholder="— Salda strutture in acciaio inox fino a 10mm&#10;— Leggo e interpreto dis. tecnici ISO&#10;— ..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 COSA NON VUOI FARE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <span class="section-title">Cosa NON vuoi fare</span>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label for="cosa_non_vuoi_fare">Limiti chiari</label>
+          <textarea id="cosa_non_vuoi_fare" name="cosa_non_vuoi_fare" placeholder="Lavoro in quota, turni notturni..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 DISPONIBILITÀ -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">07</span>
+        <span class="section-title">Disponibilità</span>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="inizio">Da quando puoi iniziare</label>
+            <input type="text" id="inizio" name="inizio" placeholder="Subito / 01/03/2026">
+          </div>
+          <div class="field">
+            <label for="contratto">Tipo di contratto desiderato</label>
+            <select id="contratto" name="contratto">
+              <option value="indeterminato">Indeterminato</option>
+              <option value="determinato">Determinato</option>
+              <option value="apprendistato">Apprendistato</option>
+              <option value="stage">Stage</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="turni">Disponibilità turni</label>
+            <select id="turni" name="turni">
+              <option value="si">Sì</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="straordinari">Disponibilità straordinari</label>
+            <select id="straordinari" name="straordinari">
+              <option value="si">Sì</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="trasferte">Disponibilità trasferte</label>
+          <select id="trasferte" name="trasferte">
+            <option value="si">Sì</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 08 ASPETTATIVE ECONOMICHE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">08</span>
+        <span class="section-title">Aspettative economiche</span>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="minima">Retribuzione minima accettabile</label>
+            <input type="text" id="minima" name="minima" placeholder="€ 1.600 netti/mese">
+          </div>
+          <div class="field">
+            <label for="desiderata">Retribuzione desiderata</label>
+            <input type="text" id="desiderata" name="desiderata" placeholder="€ 2.000 netti/mese">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 IDENTITÀ PROFESSIONALE -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">09</span>
+        <span class="section-title">Identità professionale</span>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label for="identita">3 righe su chi sei come lavoratore</label>
+          <textarea id="identita" name="identita" style="min-height:100px" placeholder="Chi sei, come lavori, cosa ti distingue..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 CV + CONSENSO -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">10</span>
+        <span class="section-title">CV e consenso</span>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label>Carica CV (opzionale)</label>
+          <div class="file-wrap" onclick="document.getElementById('cv').click()">
+            <div class="file-label-btn">Scegli file</div>
+            <div class="file-name" id="fileName">Nessun file selezionato</div>
+          </div>
+          <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" onchange="document.getElementById('fileName').textContent = this.files[0]?.name || 'Nessun file selezionato'">
+        </div>
+        <label class="consent-label">
+          <input type="checkbox" name="consenso" id="consenso" required>
+          <span class="consent-box"></span>
+          Confermo che le informazioni inserite sono veritiere e acconsento al trattamento dei dati personali ai sensi del GDPR.
+        </label>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit">
+        Invia candidatura
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+
+<footer>
+  <p>© 2026 Inoperando · <a href="mailto:cv@inoperando.it">cv@inoperando.it</a></p>
+</footer>
+
+<script>
+  // Progress bar
+  const bar = document.getElementById('progressBar');
+  function updateProgress() {
+    const form = document.getElementById('mainForm');
+    if (!form) return;
+    const rect = form.getBoundingClientRect();
+    const scrolled = Math.max(0, window.scrollY - rect.top + window.innerHeight);
+    const total = rect.height + window.innerHeight;
+    const pct = Math.min(100, (scrolled / total) * 100);
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Section animations
+  const sections = document.querySelectorAll('.section');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(20px)';
+    s.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    obs.observe(s);
+  });
+</script>
+
+</body>
+</html>
